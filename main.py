@@ -2,7 +2,7 @@
 IN this project we will learn about post,put ,delte and also learn about authentication using headers
 """
 import requests
-from datetime import datetime
+
 from user_account_details import UserDetails
 
 user_details = UserDetails()
@@ -56,15 +56,23 @@ headers = {
 # print(response.text)
 
 # Post a pixel on a graph basically adding a data to a graph on specific date.
-pixel_creation_endpoint = f"{pixela_api_endpoint}/{USERNAME}/graphs/{GRAPHID}"
-today = datetime.now()
+# pixel_creation_endpoint = f"{pixela_api_endpoint}/{USERNAME}/graphs/{GRAPHID}"
+# today = datetime.now()
+#
+# pixel_data = {
+#     "date": today.strftime("%Y%m%d"),
+#     "quantity": "10",
+#     "optionalData": '{"body_part":"upper_part"}'
+# }
+#
+# response = requests.post(url=pixel_creation_endpoint, json=pixel_data, headers=headers)
+# response.raise_for_status()
+# print(response.text)
 
-pixel_data = {
-    "date": today.strftime("%Y%m%d"),
-    "quantity": "10",
-    "optionalData": '{"body_part":"upper_part"}'
+pixel_update_endpoint = f"{pixela_api_endpoint}/{USERNAME}/graphs/{GRAPHID}/20210302"
+pixel_update_data = {
+    "quantity": "20",
 }
-
-response = requests.post(url=pixel_creation_endpoint, json=pixel_data, headers=headers)
+response = requests.put(url=pixel_update_endpoint,json=pixel_update_data,headers=headers)
 response.raise_for_status()
 print(response.text)
