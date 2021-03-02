@@ -69,10 +69,16 @@ headers = {
 # response.raise_for_status()
 # print(response.text)
 
+# update a pixel
 pixel_update_endpoint = f"{pixela_api_endpoint}/{USERNAME}/graphs/{GRAPHID}/20210302"
-pixel_update_data = {
-    "quantity": "20",
-}
-response = requests.put(url=pixel_update_endpoint,json=pixel_update_data,headers=headers)
+# pixel_update_data = {
+#     "quantity": "20",
+# }
+# response = requests.put(url=pixel_update_endpoint,json=pixel_update_data,headers=headers)
+# response.raise_for_status()
+# print(response.text)
+
+# Delete a pixel from a specific date
+response = requests.delete(url=pixel_update_endpoint,headers=headers)
 response.raise_for_status()
 print(response.text)
