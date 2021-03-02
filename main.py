@@ -5,13 +5,18 @@ import requests
 
 from user_account_details import UserDetails
 
-pixela_api_endpoint = "https://pixe.la/v1/users"
-
 user_details = UserDetails()
+TOKEN = user_details.token
+USERNAME = user_details.username
+GRAPHID = "graph1"
+
+pixela_api_endpoint = "https://pixe.la/v1/users"
+graph_endpoint = f"{pixela_api_endpoint}/{USERNAME}/graphs"
+
 # these are a parameter required to create new account on pixela
 user_params = {
-    "token": user_details.token,
-    "username": user_details.username,
+    "token": TOKEN,
+    "username": USERNAME,
     "agreeTermsOfService": "yes",
     "notMinor": "yes",
 }
@@ -34,22 +39,30 @@ Delete request => used to delete an existig data.
 # print(response.text)
 
 """Create a new pixelation graph definition."""
-graph_endpoint = f"{pixela_api_endpoint}/{user_details.username}/graphs"
-graph_params = {
-    "id": "graph1",
-    "name": "Exercise Graph",
-    "unit": "hours",
-    "color": "ajisai",
-    "type": "int",
-}
-# For authenticate ourselves pixela take auth-token same like login your account so we have to pass headers
+# graph_params = {
+#     "id": "graph1",
+#     "name": "Exercise Graph",
+#     "unit": "hours",
+#     "color": "ajisai",
+#     "type": "int",
+# }
+# # For authenticate ourselves pixela take auth-token same like login your account so we have to pass headers
 headers = {
-    "X-USER-TOKEN": user_details.token
+    "X-USER-TOKEN": TOKEN
 }
-
-response = requests.post(url=graph_endpoint, json=graph_params, headers=headers)
-response.raise_for_status()
-print(response.text)
+#
+# response = requests.post(url=graph_endpoint, json=graph_params, headers=headers)
+# response.raise_for_status()
+# print(response.text)
 
 # Post a pixel on a graph basically adding a data to a graph on specific date.
-graph_id = "graph1"
+pixel_creation_endpoint = f"{pixela_api_endpoint}/{USERNAME}/graphs/{GRAPHID}"
+pixel_data = {
+    "date": "20210302",
+    "quantity": "4",
+    "optionalData": '{"body_part":"upper_part"}'
+}
+
+response = requests.post(url=pixel_creation_endpoint, json=pixel_data, headers=headers)
+response.raise_for_status()
+print(response.text)
